@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as DatasetRouteImport } from './routes/dataset'
 import { Route as PredictRouteImport } from './routes/predict'
 import { Route as ResultsRouteImport } from './routes/results'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DatasetRoute = DatasetRouteImport.update({
+  id: '/dataset',
+  path: '/dataset',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PredictRoute = PredictRouteImport.update({
@@ -38,12 +44,14 @@ const ResultsRoute = ResultsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/dataset': typeof DatasetRoute
   '/predict': typeof PredictRoute
   '/results': typeof ResultsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/dataset': typeof DatasetRoute
   '/predict': typeof PredictRoute
   '/results': typeof ResultsRoute
 }
@@ -51,20 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/dataset': typeof DatasetRoute
   '/predict': typeof PredictRoute
   '/results': typeof ResultsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/predict' | '/results'
+  fullPaths: '/' | '/about' | '/dataset' | '/predict' | '/results'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/predict' | '/results'
-  id: '__root__' | '/' | '/about' | '/predict' | '/results'
+  to: '/' | '/about' | '/dataset' | '/predict' | '/results'
+  id: '__root__' | '/' | '/about' | '/dataset' | '/predict' | '/results'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  DatasetRoute: typeof DatasetRoute
   PredictRoute: typeof PredictRoute
   ResultsRoute: typeof ResultsRoute
 }
@@ -83,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dataset': {
+      id: '/dataset'
+      path: '/dataset'
+      fullPath: '/dataset'
+      preLoaderRoute: typeof DatasetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/predict': {
@@ -105,6 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  DatasetRoute: DatasetRoute,
   PredictRoute: PredictRoute,
   ResultsRoute: ResultsRoute,
 }
