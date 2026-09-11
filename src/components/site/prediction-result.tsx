@@ -8,7 +8,9 @@ export function classTone(label: string): "high" | "med" | "low" | "neutral" {
   return "neutral";
 }
 
-const TONE_CLASSES: Record<string, { wrap: string; text: string; bar: string }> = {
+type Tone = "high" | "med" | "low" | "neutral";
+
+const TONE_CLASSES: Record<Tone, { wrap: string; text: string; bar: string }> = {
   high: { wrap: "border-high/30 bg-high/5", text: "text-high", bar: "bg-high" },
   med: { wrap: "border-med/30 bg-med/5", text: "text-med", bar: "bg-med" },
   low: { wrap: "border-low/30 bg-low/5", text: "text-low", bar: "bg-low" },
