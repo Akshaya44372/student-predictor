@@ -24,7 +24,7 @@ import type {
 } from "./types";
 
 export const API_BASE_URL: string =
-  (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, "") ?? "";
+  (import.meta.env["VITE_API_BASE_URL"] as string | undefined)?.replace(/\/$/, "") ?? "";
 
 export const IS_MOCK = API_BASE_URL === "";
 
