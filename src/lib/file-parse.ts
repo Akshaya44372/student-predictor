@@ -36,7 +36,9 @@ export async function parseStudentFile(file: File): Promise<ParsedFile> {
     const workbook = XLSX.read(buffer, { type: "array" });
     const sheetName = workbook.SheetNames[0];
     if (!sheetName) throw new Error("empty");
-    raw = XLSX.utils.sheet_to_json<Record<string, unknown>>(workbook.Sheets[sheetName], {
+    const sheet = workbook.Sheets[sheetName];
+    if (!sheet) throw new Error("empty");
+    raw = XLSX.utils.sheet_to_json<Record<string, unknown>>(sheet, {
       defval: "",
     });
   } catch {
