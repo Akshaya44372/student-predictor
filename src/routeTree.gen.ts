@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as DatasetRouteImport } from './routes/dataset'
 import { Route as PredictRouteImport } from './routes/predict'
 import { Route as ResultsRouteImport } from './routes/results'
+import { Route as WeatherRouteImport } from './routes/weather'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +41,11 @@ const ResultsRoute = ResultsRouteImport.update({
   path: '/results',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WeatherRoute = WeatherRouteImport.update({
+  id: '/weather',
+  path: '/weather',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/dataset': typeof DatasetRoute
   '/predict': typeof PredictRoute
   '/results': typeof ResultsRoute
+  '/weather': typeof WeatherRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/dataset': typeof DatasetRoute
   '/predict': typeof PredictRoute
   '/results': typeof ResultsRoute
+  '/weather': typeof WeatherRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,21 @@ export interface FileRoutesById {
   '/dataset': typeof DatasetRoute
   '/predict': typeof PredictRoute
   '/results': typeof ResultsRoute
+  '/weather': typeof WeatherRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/dataset' | '/predict' | '/results'
+  fullPaths: '/' | '/about' | '/dataset' | '/predict' | '/results' | '/weather'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/dataset' | '/predict' | '/results'
-  id: '__root__' | '/' | '/about' | '/dataset' | '/predict' | '/results'
+  to: '/' | '/about' | '/dataset' | '/predict' | '/results' | '/weather'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/dataset'
+    | '/predict'
+    | '/results'
+    | '/weather'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,6 +93,7 @@ export interface RootRouteChildren {
   DatasetRoute: typeof DatasetRoute
   PredictRoute: typeof PredictRoute
   ResultsRoute: typeof ResultsRoute
+  WeatherRoute: typeof WeatherRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,6 +133,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResultsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/weather': {
+      id: '/weather'
+      path: '/weather'
+      fullPath: '/weather'
+      preLoaderRoute: typeof WeatherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -125,6 +149,7 @@ const rootRouteChildren: RootRouteChildren = {
   DatasetRoute: DatasetRoute,
   PredictRoute: PredictRoute,
   ResultsRoute: ResultsRoute,
+  WeatherRoute: WeatherRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
