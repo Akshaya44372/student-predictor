@@ -32,7 +32,7 @@ export const Route = createFileRoute("/predict")({
       },
     ],
   }),
-  component: Predict;
+  component: Predict,
 });
 
 type FormState = {
