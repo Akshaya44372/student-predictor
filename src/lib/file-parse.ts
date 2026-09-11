@@ -36,7 +36,9 @@ export async function parseStudentFile(file: File): Promise<ParsedFile> {
     const workbook = XLSX.read(buffer, { type: "array" });
     const sheetName = workbook.SheetNames[0];
     if (!sheetName) throw new Error("empty");
-    raw = XLSX.utils.sheet_to_json<Record<string, unknown>>(workbook.Sheets[sheetName], {
+    const sheet = workbook.Sheets[sheetName];
+    if (!sheet) throw new Error("empty");
+    raw = XLSX.utils.sheet_to_json<Record<string, unknown>>(sheet, {
       defval: "",
     });
   } catch {
@@ -61,7 +63,7 @@ export async function parseStudentFile(file: File): Promise<ParsedFile> {
     return out;
   });
 
-  const columns = Object.keys(rows[0]);
+  const columns = Object.keys(rows[0] ?? {});
   const missingColumns = REQUIRED_COLUMNS.filter((c) => !columns.includes(c));
 
   return { rows, columns, missingColumns };
@@ -69,7 +71,7 @@ export async function parseStudentFile(file: File): Promise<ParsedFile> {
 
 export function toCsv(rows: Record<string, unknown>[]): string {
   if (rows.length === 0) return "";
-  const headers = Object.keys(rows[0]);
+  const headers = Object.keys(rows[0] ?? {});
   const escape = (v: unknown) => {
     const s = v === null || v === undefined ? "" : String(v);
     return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;

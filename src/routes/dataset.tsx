@@ -65,13 +65,13 @@ function DatasetPage() {
   const dataset = useQuery({ queryKey: ["dataset"], queryFn: () => api.dataset() });
 
   const preview = dataset.data?.preview ?? [];
-  const columns = preview.length > 0 ? Object.keys(preview[0]) : [];
+  const columns = Object.keys(preview[0] ?? {});
 
   const scoreChartData = preview.map((row, i) => ({
     label: `#${i + 1}`,
-    math: Number(row.math_score),
-    reading: Number(row.reading_score),
-    writing: Number(row.writing_score),
+    math: Number(row["math_score"]),
+    reading: Number(row["reading_score"]),
+    writing: Number(row["writing_score"]),
   }));
 
   const classData = dataset.data?.class_distribution
