@@ -63,7 +63,7 @@ export async function parseStudentFile(file: File): Promise<ParsedFile> {
     return out;
   });
 
-  const columns = Object.keys(rows[0]);
+  const columns = Object.keys(rows[0] ?? {});
   const missingColumns = REQUIRED_COLUMNS.filter((c) => !columns.includes(c));
 
   return { rows, columns, missingColumns };
