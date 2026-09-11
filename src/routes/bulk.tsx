@@ -454,19 +454,23 @@ function Bulk() {
                 <tbody className="divide-y divide-border">
                   {filtered.map((r) => {
                     const confidence =
-                      r.probabilities && r.probabilities[r.prediction] !== undefined
-                        ? `${(r.probabilities[r.prediction] * 100).toFixed(1)}%`
+                      r.probabilities?.[r.prediction] !== undefined
+                        ? `${(r.probabilities[r.prediction]! * 100).toFixed(1)}%`
                         : "—";
                     return (
                       <tr key={String(r.id)} className="transition-colors hover:bg-accent/60">
                         <td className="whitespace-nowrap py-2.5 pr-4 font-mono text-xs">{r.id}</td>
-                        <td className="whitespace-nowrap py-2.5 pr-4">{String(r.input.gender ?? "—")}</td>
+                        <td className="whitespace-nowrap py-2.5 pr-4">
+                          {String(r.input["gender"] ?? "—")}
+                        </td>
                         <td className="py-2.5 pr-4 text-muted-foreground">
-                          {String(r.input.parental_level_of_education ?? "—")}
+                          {String(r.input["parental_level_of_education"] ?? "—")}
                         </td>
                         <td className="whitespace-nowrap py-2.5 pr-4 font-mono text-xs">
-                          {r.input.math_score} / {r.input.reading_score} / {r.input.writing_score}
+                          {r.input["math_score"]} / {r.input["reading_score"]} /{" "}
+                          {r.input["writing_score"]}
                         </td>
+
                         <td className="whitespace-nowrap py-2.5 pr-4 font-mono">
                           {r.average_score !== undefined ? r.average_score.toFixed(1) : "—"}
                         </td>
