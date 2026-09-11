@@ -50,9 +50,12 @@ export async function mockPredictBulk(
     mock: true,
     results: rows.map((row, i) => {
       const avg =
-        (Number(row.math_score) + Number(row.reading_score) + Number(row.writing_score)) / 3;
+        (Number(row["math_score"]) +
+          Number(row["reading_score"]) +
+          Number(row["writing_score"])) /
+        3;
       return {
-        id: (row.student_id as string | number) ?? i + 1,
+        id: (row["student_id"] as string | number) ?? i + 1,
         input: row,
         prediction: placeholderClass(avg),
         average_score: Number(avg.toFixed(2)),
