@@ -147,8 +147,8 @@ function Bulk() {
         average_score: r.average_score ?? "",
         predicted_performance: r.prediction,
         confidence:
-          r.probabilities && r.probabilities[r.prediction] !== undefined
-            ? (r.probabilities[r.prediction] * 100).toFixed(1) + "%"
+          r.probabilities?.[r.prediction] !== undefined
+            ? (r.probabilities[r.prediction]! * 100).toFixed(1) + "%"
             : "",
         model: r.model ?? "",
       })),
